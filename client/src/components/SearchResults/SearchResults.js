@@ -11,9 +11,9 @@ class SearchResults extends Component {
     }
 
     handleSave = book => {
-        if (this.state.savedBooks.map(book => book.id).includes(book.id)) {
-            API.deleteBook(book.id)
-                .then(deletedBook => this.setState({ savedBooks: this.state.savedBooks.filter(books => book.id !== deletedBook.id) }))
+        if (this.state.savedBooks.map(book => book._id).includes(book._id)) {
+            API.deleteBook(book._id)
+                .then(deletedBook => this.setState({ savedBooks: this.state.savedBooks.filter(books => book._id !== deletedBook._id) }))
                 .catch(error => console.error(error));
         } else {
             API.saveBook(book)
@@ -29,7 +29,7 @@ class SearchResults extends Component {
             ) : (
                     <div>
                         {this.props.books.map(result => (
-                            <div className="card mb-3" key={result.id}>
+                            <div className="card mb-3" key={result._id}>
                                 <div className="row">
                                     <div className="col-md-2">
                                         <img alt={result.title} className="img-fluid" src={result.image} />
@@ -41,7 +41,7 @@ class SearchResults extends Component {
                                             <div>
                                                 <a href={result.link} className="btn badge-pill btn-outline-dark mt-3" target="_blank">View</a>
                                                 <button onClick={() => this.handleSave(result)} className="btn badge-pill btn-outline-warning mt-3 ml-3">
-                                                    {this.state.savedBooks.map(book => book.id).includes(result.id) ? "Unsave" : "Save"}
+                                                    {this.state.savedBooks.map(book => book._id).includes(result._id) ? "Unsave" : "Save"}
                                                 </button>
                                             </div>
                                         </div>
